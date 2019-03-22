@@ -9,7 +9,8 @@ class InstapyAnalytics:
                  username,
                  database_name,
                  host,
-                 token):
+                 token,
+                 endpoints):
         self.username = username
 
         if not username:
@@ -21,11 +22,8 @@ class InstapyAnalytics:
         if not host:
             raise Exception("Analytics server host name is missing")
 
-        if not token:
-            raise Exception("Analytics server token is missing")
-
         self.db = InstapyDb(database_name)
-        self.api_client = ApiClient(host, token)
+        self.api_client = ApiClient(host, token, endpoints)
 
     def send(self):
         profile_activity = self.get_profile_activity()

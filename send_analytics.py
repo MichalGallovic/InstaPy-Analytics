@@ -1,7 +1,18 @@
 #!/usr/bin/env python3
 from instapy_analytics import InstapyAnalytics
+from json import load
 import optparse
 
+
+def load_endpoints():
+    with open("config.json") as f:
+        config = load(f)
+    f.close()
+
+    if "endpoints" not in config:
+        raise Exception("endpoints not configured in config.json")
+
+    return config["endpoints"]
 
 def main():
     parser = optparse.OptionParser()
@@ -23,7 +34,8 @@ def main():
     analytics = InstapyAnalytics(username=options.username,
                                  database_name=options.database_name,
                                  host=options.host,
-                                 token=options.token)
+                                 token=options.token,
+                                 endpoints=load_endpoints())
 
     analytics.send()
 
