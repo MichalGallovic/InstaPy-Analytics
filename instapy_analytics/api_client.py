@@ -25,7 +25,7 @@ class ApiClient:
 
     def __create_url(self, resource_key):
         resource = self.__create_resource(resource_key)
-        return "{}/{}".format(self.host, resource)
+        return "{}{}".format(self.host, resource)
 
     def __post(self, url, data):
         response = requests.post(url, json=data, headers=self.__create_token_header())
