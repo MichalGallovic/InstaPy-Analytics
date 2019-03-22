@@ -8,7 +8,7 @@ pip install -r requirements.txt
 ```
 
 ## Usage
-```python
+```
 python send_analytics.py 
     --username instagram_account 
     --database path_to_instapy.db
