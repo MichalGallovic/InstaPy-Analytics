@@ -7,7 +7,7 @@ from .api_client import ApiClient
 class InstapyAnalytics:
     def __init__(self,
                  profile_name,
-                 database_name,
+                 database_path,
                  host,
                  token,
                  endpoints):
@@ -16,13 +16,13 @@ class InstapyAnalytics:
         if not profile_name:
             raise Exception("Profile name is missing")
 
-        if not database_name:
+        if not database_path:
             raise Exception("Database path is missing")
 
         if not host:
             raise Exception("Analytics server host name is missing")
 
-        self.db = InstapyDb(database_name)
+        self.db = InstapyDb(database_path)
         self.api_client = ApiClient(host, token, endpoints)
 
     def send(self):

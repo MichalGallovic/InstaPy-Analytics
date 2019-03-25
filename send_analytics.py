@@ -2,6 +2,8 @@
 from instapy_analytics import InstapyAnalytics
 from json import load
 import optparse
+from instapy_analytics import copy_database
+from instapy_analytics import cleanup
 
 
 def load_endpoints():
@@ -19,9 +21,9 @@ def main():
     parser.add_option('-p', '--profile_name',
                       action='store', dest='profile_name',
                       help='Define profile name')
-    parser.add_option('-d', '--database',
-                      action='store', dest='database_name',
-                      help='Database name')
+    parser.add_option('-d', '--database_path',
+                      action='store', dest='database_path',
+                      help='Database path')
     parser.add_option('', '--host',
                       action='store', dest='host',
                       help='Analytics server host')
@@ -29,15 +31,35 @@ def main():
                       action='store', dest='token',
                       help='Analytics server api token')
 
+    parser.add_option('-c', '--container_name',
+                      action='store', dest='container_name',
+                      help='Docker container name')
+
     options, args = parser.parse_args()
 
+    if not options.container_name:
+        raise Exception("Container name is missing")
+
+    if not options.profile_name:
+        raise Exception("Profile name is missing")
+
+    if not options.database_path:
+        raise Exception("Database path is missing")
+
+    if not options.host:
+        raise Exception("Analytics server host name is missing")
+
+    copy_database(options.container_name, options.database_path)
+
     analytics = InstapyAnalytics(profile_name=options.profile_name,
-                                 database_name=options.database_name,
+                                 database_path=options.database_path,
                                  host=options.host,
                                  token=options.token,
                                  endpoints=load_endpoints())
 
     analytics.send()
+
+    cleanup(options.database_path)
 
     return None
 
