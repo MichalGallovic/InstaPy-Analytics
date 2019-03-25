@@ -16,9 +16,9 @@ def load_endpoints():
 
 def main():
     parser = optparse.OptionParser()
-    parser.add_option('-u', '--username',
-                      action='store', dest='username',
-                      help='Define username')
+    parser.add_option('-p', '--profile_name',
+                      action='store', dest='profile_name',
+                      help='Define profile name')
     parser.add_option('-d', '--database',
                       action='store', dest='database_name',
                       help='Database name')
@@ -31,7 +31,7 @@ def main():
 
     options, args = parser.parse_args()
 
-    analytics = InstapyAnalytics(username=options.username,
+    analytics = InstapyAnalytics(profile_name=options.profile_name,
                                  database_name=options.database_name,
                                  host=options.host,
                                  token=options.token,

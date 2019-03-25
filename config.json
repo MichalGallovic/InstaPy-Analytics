@@ -1,6 +1,6 @@
 {
 	"endpoints": {
-		"profile_activity": "/api/profile/activity",
-		"profile_progress": "/api/profile/progress"
+		"profile_activity": "/api/profile/activities",
+		"profile_progress": "/api/profile/progresses"
 	}
 }

@@ -11,9 +11,6 @@ class ApiClient:
         self.token = token
         self.endpoints = endpoints
 
-    def __create_token_header(self):
-        return {'X-Request-Token': self.token}
-
     def __create_resource(self, resource_key):
         if resource_key not in self.endpoints:
             raise Exception("{} is not defined in config.json".format(resource_key))
@@ -27,8 +24,18 @@ class ApiClient:
         resource = self.__create_resource(resource_key)
         return "{}{}".format(self.host, resource)
 
+    def __create_data(self, data):
+        return {
+            "data": data
+        }
+
     def __post(self, url, data):
-        response = requests.post(url, json=data, headers=self.__create_token_header())
+        data = self.__create_data(data)
+
+        if self.token:
+            data['api_token'] = self.token
+
+        response = requests.post(url, json=data)
         response.raise_for_status()
         return response.json()
 

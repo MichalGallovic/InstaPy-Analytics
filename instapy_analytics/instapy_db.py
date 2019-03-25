@@ -33,9 +33,9 @@ class InstapyDb:
 
         return self.fetch_all(sql, {'username': username})
 
-    def get_all_profile_progress(self, username):
+    def get_all_profile_progress(self, profile_name):
         sql = "select * from accountsProgress " \
               "join profiles on profiles.id = accountsProgress.profile_id " \
               "where profiles.name = :username"
 
-        return self.fetch_all(sql, {'username': username})
+        return self.fetch_all(sql, {'username': profile_name})
