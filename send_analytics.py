@@ -37,9 +37,6 @@ def main():
 
     options, args = parser.parse_args()
 
-    if not options.container_name:
-        raise Exception("Container name is missing")
-
     if not options.profile_name:
         raise Exception("Profile name is missing")
 
@@ -49,7 +46,8 @@ def main():
     if not options.host:
         raise Exception("Analytics server host name is missing")
 
-    copy_database(options.container_name, options.database_path)
+    if options.container_name:
+        copy_database(options.container_name, options.database_path)
 
     analytics = InstapyAnalytics(profile_name=options.profile_name,
                                  database_path=options.database_path,
@@ -58,8 +56,6 @@ def main():
                                  endpoints=load_endpoints())
 
     analytics.send()
-
-    cleanup(options.database_path)
 
     return None
 
